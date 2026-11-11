@@ -527,6 +527,7 @@
   .apply-steps li { counter-increment: s; border-top: 1px solid var(--rule); padding: .7rem 0; color: var(--fg-2); display: flex; gap: .75rem; }
   .apply-steps li::before { content: counter(s, decimal-leading-zero); font-family: var(--mono); color: var(--purple-hi); font-size: 13px; padding-top: .2rem; }
   .apply-steps strong { color: var(--fg); font-weight: 600; }
+  #apply-form:first-child { border-top: 0; padding-top: calc(64px + clamp(2rem, 6vw, 4rem)); }
   .apply-form-wrap { border-top: 1px solid var(--rule); padding-top: clamp(3rem, 6vw, 5rem); padding-bottom: clamp(3rem, 6vw, 5rem); scroll-margin-top: 64px; }
   .fq, .fq-result { max-width: 720px; position: relative; }
   .fq-q { border: 0; margin: 0; padding: 0; min-width: 0; }
@@ -1229,32 +1230,12 @@
 <!-- The page outreach emails link to: pick a service, watch its video, answer a few one-tap questions,
      book a call if it's a fit. Buttons, questions and wording live in SITE > funnel. -->
 <div class="page" data-page="apply" data-title="Work with me | Akshen Sivakumar" data-crumb="Work with me" hidden>
-  <section class="split split-case" id="apply-top" aria-labelledby="apply-h">
-    <div class="split-text">
-      <nav class="crumbs crumbs-inline" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; Work with me</nav>
-      <p class="scene-num">STEP 1</p>
-      <h1 class="h-display" id="apply-h" tabindex="-1"><span class="star">***</span>Work with me</h1>
-      <p class="lead">Pick what you need and watch the short video. Then answer a few one-tap questions.</p>
-      <div class="fsvc" role="group" aria-label="Choose a service"></div>
-      <p class="apply-for"><strong>This is for you if</strong> <span id="apply-for"></span></p>
-      <ol class="apply-steps">
-        <li><span><strong>Pick a service</strong> and watch its video.</span></li>
-        <li><span><strong>Answer six quick questions.</strong> About a minute, all one tap.</span></li>
-        <li><span><strong>Book a call</strong> on the spot if we&rsquo;re a fit.</span></li>
-      </ol>
-      <div class="actions">
-        <button type="button" class="pill pill-purple" data-jump>Start the questions</button>
-        <a class="pill pill-ghost" href="#/services">See all services</a>
-      </div>
-    </div>
-    <div class="split-media framed" id="apply-media" data-src="funnel.current" data-sound="tap" aria-label="Video for the chosen service" data-prompt="A short video for this service (MP4)." data-size="9:16 or 16:9"></div>
-  </section>
-
   <section class="apply-form-wrap wrap" id="apply-form" aria-labelledby="apply-form-h">
     <div class="apply-grid">
       <div class="apply-main">
-        <p class="scene-num">STEP 2</p>
-        <h2 class="h-display" id="apply-form-h">A few quick questions</h2>
+        <nav class="crumbs crumbs-inline" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; Work with me</nav>
+        <h1 class="h-display" id="apply-form-h" tabindex="-1"><span class="star">***</span>Work with me</h1>
+        <p class="lead">A few quick questions. About a minute, all one tap.</p>
         <form class="fq" novalidate>
           <input type="hidden" name="service" value="">
           <div class="fq-steps"></div>
@@ -1269,7 +1250,6 @@
       <aside class="apply-faq" aria-labelledby="apply-faq-h">
         <p class="h-sub" id="apply-faq-h">Questions</p>
         <details><summary>What happens after I submit?</summary><p>Your answers come straight to me. If it looks like a fit, you can book a call right away; otherwise I&rsquo;ll reply by email.</p></details>
-        <details><summary>Is ad spend included in the budget?</summary><p>No. The budget question covers strategy and creative. Ad spend is paid to Meta directly, and we set it together.</p></details>
         <details><summary>I&rsquo;m not sure which service fits.</summary><p>Pick the closest one. We&rsquo;ll work out the rest on the call.</p></details>
         <details><summary>What do you do with my details?</summary><p>They&rsquo;re only used to reply to your enquiry.</p></details>
       </aside>
@@ -1502,21 +1482,15 @@ const SITE = {
         options: ["Med spa or aesthetics clinic", "Dental, vet, pharmacy, or other clinic", "Restaurant, café, or bar", "Other local business", "Brand, event, or creator"] },
       { name: "role",       q: "What's your role?",
         options: ["Owner", "Manager or marketing lead", "Staff", "Other"] },
-      { name: "revenue",    q: "Roughly, what's your monthly revenue?",
-        options: ["Under $10K", "$10K–30K", "$30K–75K", "$75K–150K", "$150K+"] },
       { name: "bottleneck", q: "What's holding growth back most?",
         options: ["Not enough new customers", "Leads don't book or show up", "Posting is inconsistent", "Past customers don't come back", "No referral system", "Something else"] },
       { name: "timing",     q: "When do you want to start?",
         options: ["Right away", "In the next month", "Just exploring"] },
-      { name: "budget",     q: "Monthly budget for strategy and creative? (Ad spend is separate.)",
-        options: ["Under $500", "$500–1,000", "$1,000–2,000", "$2,000+"] },
     ],
     // A lead is qualified only if EVERY answer below is one of the listed options. Everyone else gets the polite note.
     qualify: {
       role:    ["Owner", "Manager or marketing lead"],
-      revenue: ["$10K–30K", "$30K–75K", "$75K–150K", "$150K+"],
       timing:  ["Right away", "In the next month"],
-      budget:  ["$1,000–2,000", "$2,000+"],
     },
     fitText: "Book a 20-minute call. Bring your numbers and I'll bring a first plan for your business.",
     notFitText: "From your answers, a full engagement isn't the best fit right now. I've saved your details and I'll be in touch if something suits where you are.",
@@ -2111,26 +2085,27 @@ const SITE = {
       const b = document.createElement("button"); b.type = "button"; b.className = "pill pill-ghost pill-sm";
       b.dataset.fsvc = key; b.textContent = sv.label; b.setAttribute("aria-pressed", "false");
       b.addEventListener("click", () => { history.replaceState(null, "", location.pathname + location.search + "#/apply/" + key); pick(key); });
-      tabsBox.appendChild(b);
+      if (tabsBox) tabsBox.appendChild(b);
     });
     let svc = null;
     function pick(key) {
       if (!key || !F.services[key]) key = svc || F.defaultService;
       const same = key === svc; svc = key;
-      $$("[data-fsvc]", tabsBox).forEach(t => t.setAttribute("aria-pressed", String(t.dataset.fsvc === key)));
+      if (tabsBox) $$("[data-fsvc]", tabsBox).forEach(t => t.setAttribute("aria-pressed", String(t.dataset.fsvc === key)));
       const sv = F.services[key];
-      forLine.textContent = sv.forYouIf;
+      if (forLine) forLine.textContent = sv.forYouIf;
       form.elements.service.value = key;
       const b1 = sv.business && $$('input[name="business"]', form).find(i => i.value === sv.business);
       if (b1 && !$('input[name="business"]:checked', form)) b1.checked = true;
-      if (same) return;
+      if (same || !media) return;
       F.current = sv.video || (SITE.services[key] && SITE.services[key].video) || F.intro || "";
       media.dataset.src = "funnel.current";
       media.closest(".split").classList.remove("no-media"); media.classList.remove("is-embed"); media.hidden = false;
       fill(media); loadEmbedScripts();
     }
     funnelPick = pick;
-    $("[data-jump]", page).addEventListener("click", () => {
+    const jump = $("[data-jump]", page);
+    if (jump) jump.addEventListener("click", () => {
       $("#apply-form").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
       setTimeout(() => { const f = $(".fq-q:not([hidden]) input", form); f && f.focus({ preventScroll: true }); }, reduceMotion ? 0 : 500);
     });
@@ -2204,7 +2179,7 @@ const SITE = {
           try { const u = new URL(F.booking); u.searchParams.set("name", a.name); u.searchParams.set("email", a.email);
                 cal = '<iframe class="fq-book" src="' + esc(u.href) + '" title="Book a call with Akshen" loading="lazy"></iframe>'; } catch (e) {}
         }
-        html = '<p class="scene-num">STEP 3</p><h3>You&rsquo;re a fit. Pick a time.</h3><p>' + esc(F.fitText) + "</p>" + backup +
+        html = '<h3>You&rsquo;re a fit. Pick a time.</h3><p>' + esc(F.fitText) + "</p>" + backup +
           (cal || '<div class="actions"><a class="pill pill-purple" href="' + esc(mail) + '">Email me to book</a><a class="pill pill-ghost" href="tel:' + esc(F.phone) + '">Call ' + esc(F.phoneLabel) + "</a></div>");
       } else {
         html = "<h3>Thanks, " + esc(String(a.name).trim().split(/\s+/)[0]) + ".</h3><p>" + esc(F.notFitText) + "</p>" + backup +
