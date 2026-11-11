@@ -698,7 +698,7 @@
     }, still ? 0 : 120);
   }
   // the name types in, one key at a time, then holds for a moment before the site opens
-  const TYPE = { start: .7, key: .11, hold: 1.2 };   // seconds: typing starts this long after the press; gap between keys; pause on the full name
+  const TYPE = { start: .7, key: .11, hold: .5 };   // seconds: typing starts this long after the press; gap between keys; pause on the full name
   function typeName() {
     if (done) return;
     if (n >= letters.length) { typeT = setTimeout(open, TYPE.hold * 1000); return; }
