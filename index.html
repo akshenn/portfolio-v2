@@ -16,6 +16,8 @@
      Set INTRO to false to skip it. Once seen, it stays off until the browser tab is closed. */
   window.INTRO = true;
   window.INTRO_NAME = "AKSHEN***";   // the stars are drawn small and raised, like the wordmark
+  window.INTRO_NAME_SERVICES = "SERVICES***";   // what types in when someone lands on a Services page (#/services, #/services/clinic, ...)
+  if (/^#\/services(\/|$)/.test(location.hash)) { window.INTRO_NAME = window.INTRO_NAME_SERVICES; window.INTRO_MARK = "#services-h"; }   // types right over the Services heading
                                                                          // Tried in order: if one won't load, the next plays. [] for silence.
   const skipIntro = /^#\/apply/.test(location.hash);   // outreach links land straight on Work with me
   try { if (window.INTRO && !skipIntro && sessionStorage.getItem("gate-open") !== "1") document.documentElement.classList.add("gated"); }
@@ -133,6 +135,7 @@
   /* the home wordmark, after the Canva site */
   .mark { display: flex; align-items: flex-end; gap: .2em; font-family: var(--display); text-transform: uppercase; line-height: .82; margin: 0; font-weight: 400; }
   .mark-name { font-size: clamp(4.2rem, 15vw, 13.5rem); letter-spacing: -.005em; }
+  .h-display .star { font-size: .62em; vertical-align: top; position: relative; top: -.42em; letter-spacing: -.08em; }   /* headings: small raised stars after the word, like the wordmark */
   .mark-name .star { font-size: .62em; vertical-align: top; position: relative; top: -.42em; letter-spacing: -.08em; }
   .mark-role { font-size: clamp(1.1rem, 2.6vw, 2.4rem); line-height: .95; padding-bottom: .12em; }
 
@@ -639,11 +642,12 @@
   });
   // line the name up with the AKSHEN*** wordmark on the home page: same spot, same size, so nothing moves when the site opens
   function place() {
-    const mark = document.querySelector('.page[data-page="home"]:not([hidden]) .mark-name');
+    const mark = document.querySelector(window.INTRO_MARK || '.page[data-page="home"]:not([hidden]) .mark-name');
     const r = mark && mark.getBoundingClientRect();
-    if (!r || !r.width) { nameEl.classList.remove("placed"); nameEl.removeAttribute("style"); return; }   // landed on another page: stay centred
+    if (!r || !r.width || r.bottom < 0 || r.top > innerHeight) { nameEl.classList.remove("placed"); nameEl.removeAttribute("style"); return; }   // landed on another page: stay centred
     const cs = getComputedStyle(mark);
-    Object.assign(nameEl.style, { left: r.left + "px", top: r.top + "px", fontSize: cs.fontSize, lineHeight: cs.lineHeight,
+    Object.assign(nameEl.style, { left: r.left + "px", top: r.top + "px", fontSize: cs.fontSize,
+      lineHeight: String(parseFloat(cs.lineHeight) / parseFloat(cs.fontSize) || ""),   // as a ratio, so the smaller stars get their own line height and sit exactly where the real ones do
       letterSpacing: cs.letterSpacing, fontFamily: cs.fontFamily, fontWeight: cs.fontWeight });
     nameEl.classList.add("placed");
   }
@@ -762,7 +766,7 @@
   <!-- 2. About me + body of work, with the group camera photo -->
   <section class="split" id="about" aria-labelledby="about-h">
     <div class="split-text">
-      <h2 class="h-display" id="about-h"><span class="star">***</span>About me</h2>
+      <h2 class="h-display" id="about-h">About me<span class="star">***</span></h2>
       <p class="lead">I'm Akshen Sivakumar. Western University alumnus (BSc, Major in Biology, Minor in General Cinema Studies).</p>
       <p class="h-sub" id="guide"><span class="u">Projects</span>: work I&rsquo;ve led and made.</p>
       <ul class="guide">
@@ -846,31 +850,20 @@
   <figure class="wide-figure" data-src="spur.teamLabelled"></figure>
 
   <!-- the four scenes: picking a scene recolours only this block -->
-  <div class="scenes">
+  <div class="scenes" data-theme="lullaby">
   <section class="scenes-intro wrap" aria-labelledby="scenes-h">
     <h2 class="h-display" id="scenes-h">Four scenes</h2>
-    <p>The show follows The Dreamer through four scenes, each with its own film. Pick a scene to change its colours.</p>
+    <p>The show follows The Dreamer through four scenes, each with its own film. Each scene plays in turn; pick one to stay on it.</p>
   </section>
 
   <div class="tabs wrap" role="tablist" aria-label="SOMNIA scenes">
-    <button class="tab" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true" data-theme="black"><span class="swatch sw-black"></span>Overview</button>
-    <button class="tab" role="tab" id="tab-lullaby" aria-controls="panel-lullaby" aria-selected="false" tabindex="-1" data-theme="lullaby"><span class="swatch sw-lullaby"></span>1 Lullaby</button>
+    <button class="tab" role="tab" id="tab-lullaby" aria-controls="panel-lullaby" aria-selected="true" data-theme="lullaby"><span class="swatch sw-lullaby"></span>1 Lullaby</button>
     <button class="tab" role="tab" id="tab-labyrinth" aria-controls="panel-labyrinth" aria-selected="false" tabindex="-1" data-theme="labyrinth"><span class="swatch sw-labyrinth"></span>2 Labyrinth</button>
     <button class="tab" role="tab" id="tab-havoc" aria-controls="panel-havoc" aria-selected="false" tabindex="-1" data-theme="havoc"><span class="swatch sw-havoc"></span>3 Havoc</button>
     <button class="tab" role="tab" id="tab-lucidity" aria-controls="panel-lucidity" aria-selected="false" tabindex="-1" data-theme="lucidity"><span class="swatch sw-lucidity"></span>4 Lucidity</button>
   </div>
 
-  <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
-    <section class="split">
-      <div class="split-text">
-        <h3 class="h-display">SOMNIA</h3>
-        <p class="lead">Four scenes, from a childhood daydream to waking up free.</p>
-      </div>
-      <div class="split-media" data-src="spur.lookbook" data-prompt="The SOMNIA lookbook and program." data-size="Any orientation"></div>
-    </section>
-  </div>
-
-  <div role="tabpanel" id="panel-lullaby" aria-labelledby="tab-lullaby" hidden data-scene="lullaby">
+  <div role="tabpanel" id="panel-lullaby" aria-labelledby="tab-lullaby" data-scene="lullaby">
     <div class="scene-film"></div>
     <section class="split">
       <div class="split-text">
@@ -1110,7 +1103,7 @@
   <section class="split split-case" aria-labelledby="services-h">
     <div class="split-text">
       <nav class="crumbs crumbs-inline" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; Services</nav>
-      <h1 class="h-display" id="services-h" tabindex="-1"><span class="star">***</span>Services</h1>
+      <h1 class="h-display" id="services-h" tabindex="-1">Services<span class="star">***</span></h1>
       <p class="lead">What I can make for you, from one short video to a full campaign.</p>
       <p>Projects show what I&rsquo;ve made; services are what you can hire me for. Each one below has a video and examples of the work. Pricing is set per project.</p>
       <ul class="guide guide-svc">
@@ -1234,7 +1227,7 @@
     <div class="apply-grid">
       <div class="apply-main">
         <nav class="crumbs crumbs-inline" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; Work with me</nav>
-        <h1 class="h-display" id="apply-form-h" tabindex="-1"><span class="star">***</span>Work with me</h1>
+        <h1 class="h-display" id="apply-form-h" tabindex="-1">Work with me<span class="star">***</span></h1>
         <p class="lead">A few quick questions. About a minute, all one tap.</p>
         <form class="fq" novalidate>
           <input type="hidden" name="service" value="">
@@ -1939,8 +1932,8 @@ const SITE = {
 
   /* ---------- SPUR scene tabs: each one recolours the page ---------- */
   const tabs = $$('[role="tab"]');
-  let currentTheme = "black";
-  function selectTab(tab, focus) {
+  let currentTheme = "lullaby";
+  function selectTab(tab, focus, auto) {
     tabs.forEach(t => {
       const on = t === tab;
       t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
@@ -1968,21 +1961,45 @@ const SITE = {
       }
       if (v && !reduceMotion) { v.muted = true; v.play().catch(() => {}); }   // reveal: starts muted, controls let you turn the sound up
     }
-    if ($(".tabs").getBoundingClientRect().top < 66) toScenes();
+    if (!auto && $(".tabs").getBoundingClientRect().top < 66) toScenes();
   }
   function toScenes() {
     const top = $(".scenes-intro").getBoundingClientRect().bottom + window.scrollY - 64;
     window.scrollTo({ top, behavior: reduceMotion ? "auto" : "smooth" });
   }
   tabs.forEach(t => {
-    t.addEventListener("click", () => selectTab(t));
+    t.addEventListener("click", () => { commitScene(); selectTab(t); });
     t.addEventListener("keydown", e => {
       const i = tabs.indexOf(t);
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") commitScene();
       if (e.key === "ArrowRight") { e.preventDefault(); selectTab(tabs[(i + 1) % tabs.length], true); }
       if (e.key === "ArrowLeft")  { e.preventDefault(); selectTab(tabs[(i - 1 + tabs.length) % tabs.length], true); }
     });
   });
-  $$("[data-goto]").forEach(b => b.addEventListener("click", () => { const t = document.getElementById("tab-" + b.dataset.goto); selectTab(t); toScenes(); }));
+  $$("[data-goto]").forEach(b => b.addEventListener("click", () => { const t = document.getElementById("tab-" + b.dataset.goto); commitScene(); selectTab(t); toScenes(); }));
+
+  /* scenes auto-advance every SCENE_AUTO seconds while the Four scenes block is on screen,
+     until someone clicks a tab (or anything inside the block, like a scene film's controls). Set to 0 to turn off. */
+  const SCENE_AUTO = 2;
+  let sceneTimer = null, sceneCommitted = !SCENE_AUTO, scenesVisible = false;
+  function commitScene() { sceneCommitted = true; clearInterval(sceneTimer); sceneTimer = null; }
+  function runScenes() {
+    clearInterval(sceneTimer); sceneTimer = null;
+    if (sceneCommitted || !scenesVisible || document.hidden) return;
+    sceneTimer = setInterval(() => {
+      const i = tabs.findIndex(t => t.getAttribute("aria-selected") === "true");
+      selectTab(tabs[(i + 1) % tabs.length], false, true);
+    }, SCENE_AUTO * 1000);
+  }
+  const scenesEl = $(".scenes");
+  if (scenesEl) {
+    scenesEl.addEventListener("pointerdown", commitScene);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(es => { scenesVisible = es[0].isIntersecting; runScenes(); }, { threshold: .25 }).observe(scenesEl);
+    }
+    document.addEventListener("visibilitychange", runScenes);
+    selectTab(tabs[0], false, true);   // load the first scene's film
+  }
 
   /* ---------- top bar, floating guide, router ---------- */
   const bar = $(".bar"), dock = $(".dock"), dockBtn = $(".dock-btn"), dockMenu = $("#dock-menu");
@@ -2033,6 +2050,9 @@ const SITE = {
     dockBtn.setAttribute("aria-label", (name === "home" ? "Home" : "Home, " + page.dataset.crumb) + ". Open the site guide");
     $$("a[data-route]", dockMenu).forEach(a => { if (a.dataset.route === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
     if (anchor) { const t = document.getElementById(anchor); t && t.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); if (anchor === "guide") flashGuide(); }
+    else if (svc && document.getElementById("svc-" + svc) && document.documentElement.classList.contains("gated")) {
+      window.scrollTo(0, 0);   // the intro types over the Services heading first; gate:open then scrolls down to this service
+    }
     else if (svc && document.getElementById("svc-" + svc)) {
       const t = document.getElementById("svc-" + svc);
       requestAnimationFrame(() => t.scrollIntoView({ behavior: changed || reduceMotion ? "auto" : "smooth" }));
@@ -2049,6 +2069,8 @@ const SITE = {
   }
   // once the intro opens the site, start this page's full-screen film (the play button counts as a click, so sound is allowed)
   document.addEventListener("gate:open", () => {
+    const svcOpen = (location.hash.match(/^#\/services\/([\w-]+)$/) || [])[1], svcEl = svcOpen && document.getElementById("svc-" + svcOpen);
+    if (svcEl) setTimeout(() => svcEl.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }), 450);   // landed on #/services/clinic: after the intro, glide to that service
     const page = pages.find(p => !p.hidden), f = flushes.find(x => x.sec.closest(".page") === page);
     if (f && f.start && window.scrollY < window.innerHeight) f.start();
   });
