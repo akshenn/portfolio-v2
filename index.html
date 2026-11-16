@@ -543,7 +543,8 @@
   .fq-fields { display: grid; gap: .9rem; grid-template-columns: 1fr 1fr; }
   .fq-fields label { display: grid; gap: .35rem; font-size: 14px; color: var(--fg-2); }
   .fq-fields .full { grid-column: 1 / -1; }
-  .fq-fields input[type=text], .fq-fields input[type=email], .fq-fields input[type=tel] { font: inherit; font-size: 16px; color: var(--fg); background: var(--slot); border: 1px solid var(--rule); border-radius: 8px; padding: .7rem .8rem; }
+  .fq-fields .fq-hint { font-size: 12px; color: var(--fg-3, var(--fg-2)); opacity: .8; }
+  .fq-fields input[type=text], .fq-fields input[type=email], .fq-fields input[type=tel], .fq-fields textarea { font: inherit; font-size: 16px; color: var(--fg); background: var(--slot); border: 1px solid var(--rule); border-radius: 8px; padding: .7rem .8rem; }
   .fq-fields input:focus-visible { outline: 2px solid var(--purple-hi); outline-offset: 1px; }
   .fq-fields .fq-consent { display: flex; align-items: flex-start; gap: .6rem; }
   .fq-fields .fq-consent input { accent-color: var(--purple); margin-top: .2rem; }
@@ -736,7 +737,7 @@
   <nav class="bar-nav" aria-label="Main">
     <a class="hide-sm" href="#/guide">Projects</a>
     <a class="hide-sm" href="#/services">Services</a>
-    <a class="pill pill-purple pill-sm" href="#/apply">Work with me</a>
+    <a class="pill pill-purple pill-sm" href="#/apply">Get in touch</a>
   </nav>
 </header>
 
@@ -1222,13 +1223,13 @@
 <!-- ======================= WORK WITH ME (#/apply) ======================= -->
 <!-- The page outreach emails link to: pick a service, watch its video, answer a few one-tap questions,
      book a call if it's a fit. Buttons, questions and wording live in SITE > funnel. -->
-<div class="page" data-page="apply" data-title="Work with me | Akshen Sivakumar" data-crumb="Work with me" hidden>
+<div class="page" data-page="apply" data-title="Get in touch | Akshen Sivakumar" data-crumb="Get in touch" hidden>
   <section class="apply-form-wrap wrap" id="apply-form" aria-labelledby="apply-form-h">
     <div class="apply-grid">
       <div class="apply-main">
-        <nav class="crumbs crumbs-inline" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; Work with me</nav>
-        <h1 class="h-display" id="apply-form-h" tabindex="-1">Work with me<span class="star">***</span></h1>
-        <p class="lead">A few quick questions. About a minute, all one tap.</p>
+        <nav class="crumbs crumbs-inline" aria-label="Breadcrumb"><a href="#/">Home</a> &rsaquo; Get in touch</nav>
+        <h1 class="h-display" id="apply-form-h" tabindex="-1">Get in touch<span class="star">***</span></h1>
+        <p class="lead">Tell us about your plans. A few one-tap questions.</p>
         <form class="fq" novalidate>
           <input type="hidden" name="service" value="">
           <div class="fq-steps"></div>
@@ -1259,7 +1260,7 @@
       <p><a href="mailto:akshens@gmail.com" style="font-size:clamp(1.4rem,2.6vw,2rem);text-decoration:none">akshens@gmail.com</a><br><a href="tel:+16479722872" style="text-decoration:none">(647) 972-2872</a></p>
       <p style="margin-top:1rem">Pricing is set per project. Tell me which <a href="#/services">service</a> you&rsquo;re after, or what you&rsquo;re making.</p>
       <div class="actions">
-        <a class="pill pill-purple" href="#/apply">Work with me</a>
+        <a class="pill pill-purple" href="#/apply">Get in touch</a>
         <a class="pill pill-ghost" href="mailto:akshens@gmail.com">Email me</a>
         <a class="pill pill-ghost" href="https://www.instagram.com/most.wanted.film/" target="_blank" rel="noopener">Instagram</a>
         <a class="pill pill-ghost" href="https://www.tiktok.com/@most.wanted.film" target="_blank" rel="noopener">TikTok</a>
@@ -1291,7 +1292,7 @@
       <li><a href="#/social" data-route="social">Social media recap</a></li>
       <li class="group">Services</li>
       <li><a href="#/services" data-route="services">What I offer</a></li>
-      <li><a href="#/apply" data-route="apply">Work with me</a></li>
+      <li><a href="#/apply" data-route="apply">Get in touch</a></li>
       <li><a href="#/elitemd" data-route="elitemd">Client work: EliteMD</a></li>
       <li class="group">&nbsp;</li>
       <li><a href="#/contact" data-route="contact">Contact me</a></li>
@@ -1406,7 +1407,7 @@ const SITE = {
     more: [              // the row of tall tiles under the intro, each with a caption. Add as many as you like (four per row).
                          // Videos get a "Sound on" button; add  sound: false  for a clip with no audio.
       { src: "media/img-1019.jpg",  caption: "Services banner in the clinic" },
-      { src: "media/elitemd-1.mp4", caption: "Second-chance offer ad" },
+      { src: "media/elitemd-1.mp4", caption: "Laser hair removal: why it takes several sessions" },
       { src: "media/elitemd-2.mp4", caption: "Event talk" },              // brightened
       { src: "media/elitemd-3.mp4", caption: "Step inside EliteMD" },
     ],
@@ -1421,7 +1422,7 @@ const SITE = {
     clinic: {                                                                                  // 01 Clinic & med spa marketing
       video: { src: "media/elitemd-3.mp4", ratio: 9 / 16, caption: "Step inside EliteMD: a lead-generation reel" },
       examples: [
-        { src: "media/elitemd-1.mp4", ratio: 9 / 16, caption: "Missed the event? A second-chance offer" },
+        { src: "media/elitemd-1.mp4", ratio: 9 / 16, caption: "Laser hair removal explainer: why it takes several sessions" },
         { src: "media/img-1019.jpg",  ratio: 3 / 4,  caption: "Services banner in the clinic" },
         { src: "media/elitemd-2.mp4", ratio: 9 / 16, caption: "In-clinic event talk, for past clients" },
         { src: CANVA + "media/90eb8e223371afa443bedbed7ca3bf8a.jpg", ratio: 3 / 4, caption: "Pamphlets, printed with VistaPrint" },
@@ -1449,7 +1450,8 @@ const SITE = {
   // Link straight to a service:  https://<your-site>/#/apply/clinic
   // Track a campaign by adding UTM tags before the #:  https://<your-site>/?utm_source=email&utm_campaign=medspa-nov#/apply/clinic
   funnel: {
-    endpoint: "",   // where answers are sent. Free option: create a form at formspree.io and paste its link, e.g. "https://formspree.io/f/abcdwxyz".
+    endpoint: "",   // where answers are sent: your Google Apps Script Web app URL (ends in /exec). Setup steps: apps-script/leads.gs
+                    // Each lead becomes a row in your Google Sheet and you get an email summary. (A formspree.io link also works.)
                     // Empty: visitors see a button to email you their answers instead.
     booking: "",    // your calendar, shown ONLY to qualified leads: a Cal.com or Calendly link, e.g. "https://cal.com/akshen/intro".
                     // Empty: qualified leads get email / call buttons instead.
@@ -1468,13 +1470,17 @@ const SITE = {
                     forYouIf: "you're running a show, launch, or event and want video, photos, and recaps that every brand in the room will share." },
       local:      { label: "Restaurants & local", video: "", business: "Restaurant, café, or bar",
                     forYouIf: "you run a restaurant, café, or local shop and want regulars, event nights, and posts that bring people through the door." },
+      shoots:     { label: "Shoot days",          video: "", business: "Car detailing or auto",
+                    forYouIf: "you're a detailer, DJ, visual artist, or musician and want one shoot day turned into promo clips, a visualizer, or a recap." },
     },
     // The one-tap questions, in order. Edit the wording freely, but keep qualify (below) matching the option text exactly.
     questions: [
       { name: "business",   q: "What do you run?",
-        options: ["Med spa or aesthetics clinic", "Dental, vet, pharmacy, or other clinic", "Restaurant, café, or bar", "Other local business", "Brand, event, or creator"] },
+        options: ["Med spa or aesthetics clinic", "Dental, vet, pharmacy, or other clinic", "Restaurant, café, or bar", "Car detailing or auto", "DJ, musician, or visual artist", "Other local business", "Brand, event, or creator"] },
+      { name: "plans",      q: "What are you planning?",
+        options: ["Monthly content", "A one-off shoot day", "Event coverage or recap", "Music visualizer", "Editing footage I already have", "Ads and new leads"] },
       { name: "role",       q: "What's your role?",
-        options: ["Owner", "Manager or marketing lead", "Staff", "Other"] },
+        options: ["Owner", "Manager or marketing lead", "Artist or creator", "Staff", "Other"] },
       { name: "bottleneck", q: "What's holding growth back most?",
         options: ["Not enough new customers", "Leads don't book or show up", "Posting is inconsistent", "Past customers don't come back", "No referral system", "Something else"] },
       { name: "timing",     q: "When do you want to start?",
@@ -1482,11 +1488,11 @@ const SITE = {
     ],
     // A lead is qualified only if EVERY answer below is one of the listed options. Everyone else gets the polite note.
     qualify: {
-      role:    ["Owner", "Manager or marketing lead"],
+      role:    ["Owner", "Manager or marketing lead", "Artist or creator"],
       timing:  ["Right away", "In the next month"],
     },
     fitText: "Book a 20-minute call. Bring your numbers and I'll bring a first plan for your business.",
-    notFitText: "From your answers, a full engagement isn't the best fit right now. I've saved your details and I'll be in touch if something suits where you are.",
+    notFitText: "Based on your answers, a full project may not be the right fit just yet. I'll keep your details on file and reach out when a package suits where you are.",
     resource: "",            // optional: a free guide or video for leads who aren't a fit yet (a link)
     resourceLabel: "Free guide",
   },
@@ -1609,6 +1615,33 @@ const SITE = {
     }
     return null;
   }
+
+  // The email the client sends you: their own words first, then a plain summary of their answers (nothing made up for them)
+  function inquiryText(a, label) {
+    const t = v => String(v || "").trim();
+    const BIZ = { "Med spa or aesthetics clinic": "med spa", "Dental, vet, pharmacy, or other clinic": "clinic",
+      "Restaurant, café, or bar": "restaurant", "Car detailing or auto": "car detailing", "DJ, musician, or visual artist": "artist",
+      "Other local business": "local business", "Brand, event, or creator": "brand or event" };
+    const ROLE = { "Owner": "owner", "Manager or marketing lead": "marketing lead", "Artist or creator": "", "Staff": "", "Other": "" };
+    const WHEN = { "Right away": "right away", "In the next month": "within the next month", "Just exploring": "just exploring" };
+    const name = t(a.name), co = t(a.company), msg = t(a.message);
+    const coShown = co && co.toLowerCase() !== name.toLowerCase() ? co : "";
+    const biz = BIZ[a.business] || t(a.business).toLowerCase();
+    const role = ROLE[a.role] !== undefined ? ROLE[a.role] : t(a.role).toLowerCase();
+    let who = name;
+    if (a.role === "Artist or creator" && !coShown) who += biz ? ", independent " + biz : "";
+    else who += [role, coShown ? coShown + (biz ? " (" + biz + ")" : "") : biz].filter(Boolean).map(x => ", " + x).join("");
+    const lines = [who];
+    if (a.plans) lines.push("Looking for: " + t(a.plans).charAt(0).toLowerCase() + t(a.plans).slice(1));
+    if (a.timing) lines.push("Timing: " + (WHEN[a.timing] || t(a.timing).toLowerCase()));
+    if (a.bottleneck && a.bottleneck !== "Something else") lines.push("Main challenge: " + t(a.bottleneck).charAt(0).toLowerCase() + t(a.bottleneck).slice(1));
+    lines.push([t(a.email), t(a.phone), t(a.website)].filter(Boolean).join(" · "));
+    const subject = "Inquiry from " + (co || name);
+    const body = "Hi Akshen,\n\n" + (msg || "I filled out the form on your site. Here are my details.") + "\n\n" + lines.join("\n") +
+      "\n\n--\nSent from akshen.info (" + label + ")";
+    return { subject, body };
+  }
+
   // inline videos play whenever they're on screen and pause when they're not, including after switching pages
   const onScreenPlayer = new IntersectionObserver(entries => entries.forEach(en => {
     if (en.isIntersecting) en.target.play().catch(() => {}); else en.target.pause();
@@ -1980,7 +2013,7 @@ const SITE = {
 
   /* scenes auto-advance every SCENE_AUTO seconds while the Four scenes block is on screen,
      until someone clicks a tab (or anything inside the block, like a scene film's controls). Set to 0 to turn off. */
-  const SCENE_AUTO = 2;
+  const SCENE_AUTO = 4;
   let sceneTimer = null, sceneCommitted = !SCENE_AUTO, scenesVisible = false;
   function commitScene() { sceneCommitted = true; clearInterval(sceneTimer); sceneTimer = null; }
   function runScenes() {
@@ -2141,6 +2174,7 @@ const SITE = {
     });
     const last = document.createElement("fieldset"); last.className = "fq-q"; last.hidden = true;
     last.innerHTML = '<legend>Last step: where should I reach you?</legend><div class="fq-fields">' +
+      '<label class="full">What are you working on?<textarea name="message" rows="3" placeholder="We have an event on Dec 5 and want to fill it."></textarea><span class="fq-hint">A launch, an event, more bookings, anything. Optional, but it helps.</span></label>' +
       '<label>Your name<input type="text" name="name" autocomplete="name" required></label>' +
       '<label>Business name<input type="text" name="company" autocomplete="organization" required></label>' +
       '<label>Email<input type="email" name="email" autocomplete="email" required></label>' +
@@ -2181,19 +2215,27 @@ const SITE = {
       const a = Object.fromEntries(fd.entries()); delete a._gotcha;
       const fit = Object.entries(F.qualify).every(([k, ok]) => ok.includes(a[k]));
       const label = (F.services[a.service] || {}).label || a.service;
-      const data = Object.assign({ _subject: (fit ? "[Qualified] " : "[Lead] ") + (a.company || a.name) + " · " + label,
-        qualified: fit ? "yes" : "no" }, a, track, { page: location.href, submitted: new Date().toISOString() });
+      const note = inquiryText(a, label);
+      const data = Object.assign({ _subject: (fit ? "⭐ " : "") + note.subject,
+        qualified: fit ? "yes" : "no", _inquiry: note.body }, a, track, { page: location.href, submitted: new Date().toISOString() });
       next.disabled = true; next.textContent = "Sending…";
       let sent = false;
       if (F.endpoint) {
         try {
-          const r = await fetch(F.endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+          // Google Apps Script can't answer a CORS preflight, so it gets a "simple" text/plain POST (the script still parses the JSON)
+          const gas = /script\.google(usercontent)?\.com/.test(F.endpoint);
+          const r = await fetch(F.endpoint, gas
+            ? { method: "POST", body: JSON.stringify(data), redirect: "follow" }
+            : { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
           sent = r.ok;
+          if (sent && gas) { try { sent = (await r.json()).ok !== false; } catch (e) {} }
         } catch (e) { sent = false; }
       }
-      const mail = "mailto:" + F.email + "?subject=" + encodeURIComponent(data._subject) + "&body=" +
-        encodeURIComponent(Object.entries(data).filter(([k]) => k[0] !== "_").map(([k, v]) => k + ": " + v).join("\n"));
-      const backup = sent ? "" : '<p class="fine">One more click so I get your answers: <a href="' + esc(mail) + '">send them by email</a>.</p>';
+      // the client's own email app opens with a normal-sounding note (no "qualified" labels, no raw form fields)
+      const mail = "mailto:" + F.email + "?subject=" + encodeURIComponent(note.subject) + "&body=" + encodeURIComponent(note.body);
+      // no form endpoint (or it failed): make it obvious the answers still need to be sent
+      const backup = sent ? "" : '<p class="fine"><strong>Your answers haven&rsquo;t been sent yet.</strong> Tap <em>Send my answers</em> to open your email with everything filled in, then hit send.</p>';
+      const sendBtn = sent ? "" : '<a class="pill pill-purple" href="' + esc(mail) + '">Send my answers</a>';
       let html;
       if (fit) {
         let cal = "";
@@ -2205,7 +2247,7 @@ const SITE = {
           (cal || '<div class="actions"><a class="pill pill-purple" href="' + esc(mail) + '">Email me to book</a><a class="pill pill-ghost" href="tel:' + esc(F.phone) + '">Call ' + esc(F.phoneLabel) + "</a></div>");
       } else {
         html = "<h3>Thanks, " + esc(String(a.name).trim().split(/\s+/)[0]) + ".</h3><p>" + esc(F.notFitText) + "</p>" + backup +
-          '<div class="actions">' + (F.resource ? '<a class="pill pill-purple" href="' + esc(F.resource) + '" target="_blank" rel="noopener">' + esc(F.resourceLabel) + "</a>" : "") +
+          '<div class="actions">' + sendBtn + (F.resource ? '<a class="pill ' + (sendBtn ? "pill-ghost" : "pill-purple") + '" href="' + esc(F.resource) + '" target="_blank" rel="noopener">' + esc(F.resourceLabel) + "</a>" : "") +
           '<a class="pill pill-ghost" href="#/services">See services</a></div>';
       }
       form.hidden = true; err.textContent = ""; result.innerHTML = html; result.hidden = false;
