@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Clinic System | Akshen Sivakumar</title>
+<meta name="description" content="Content and ads for med spas, built from your services and your regulator's rules. Paid package ads, event recaps that bring past patients back, and a bank of 21 educational videos.">
+<meta property="og:title" content="The Clinic System | Akshen Sivakumar">
+<meta property="og:description" content="New patients in. Past patients back. A feed that never goes quiet.">
+<meta property="og:image" content="../media/spur-poster.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  V3 — one page, no fluff. Lives at akshen.info/v3/ and reuses ../media from v2.
+  Everything you'll want to change is in CONFIG near the bottom (VSL file, form endpoint, booking link).
+-->
+<style>
+  :root{
+    --bg:#000;--fg:#fff;--fg2:rgba(255,255,255,.68);--fg3:rgba(255,255,255,.46);
+    --rule:rgba(255,255,255,.14);--card:#0d0d0f;--card2:#151518;
+    --purple:#6D4FE8;--purple-hi:#8C74F5;--glow:#E8FF59;
+    --g:clamp(20px,5vw,88px);
+    --display:"Anton","Impact","Arial Narrow",sans-serif;
+    --text:"Geist","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:120px}
+  body{background:var(--bg);color:var(--fg);font:400 16px/1.5 var(--text);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img,video{display:block;max-width:100%}
+  .wrap{padding:0 var(--g);max-width:1440px;margin:0 auto}
+  .mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg3)}
+  .star{font-size:.42em;vertical-align:.95em;letter-spacing:.02em;color:var(--purple-hi)}
+  :focus-visible{outline:2px solid var(--purple-hi);outline-offset:3px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+  header .wrap{display:flex;align-items:center;gap:28px;height:64px}
+  .mark{font:400 26px/1 var(--display);letter-spacing:.01em}
+  header nav{display:flex;gap:24px;margin-left:auto;font-size:14px;color:var(--fg2)}
+  header nav a:hover{color:var(--fg)}
+  .pill{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;font:500 15px/1 var(--text);border:1px solid transparent;cursor:pointer;transition:transform .15s,background .15s}
+  .pill:active{transform:scale(.97)}
+  .pill-w{background:#fff;color:#000}.pill-w:hover{background:#e8e8e8}
+  .pill-p{background:var(--purple);color:#fff}.pill-p:hover{background:var(--purple-hi)}
+  .pill-o{border-color:var(--rule);color:#fff;background:transparent}.pill-o:hover{border-color:#fff}
+  header .pill{height:38px;padding:0 16px;font-size:14px}
+  @media(max-width:760px){header nav{display:none}header .pill{margin-left:auto}}
+
+  /* hero */
+  .hero{padding:clamp(48px,8vw,112px) 0 56px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,5vw,80px);align-items:center}
+  .eyebrow{display:inline-flex;gap:10px;align-items:center;margin-bottom:28px}
+  .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--glow);box-shadow:0 0 12px var(--glow)}
+  h1{font:400 clamp(56px,8.6vw,136px)/.92 var(--display);text-transform:uppercase;letter-spacing:-.005em}
+  h1 em{font-style:normal;color:var(--glow);text-shadow:0 0 28px rgba(232,255,89,.45)}
+  .lede{margin-top:28px;font-size:clamp(17px,1.5vw,21px);color:var(--fg2);max-width:34em}
+  .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+  .vsl{position:relative;border-radius:22px;overflow:hidden;background:var(--card);aspect-ratio:9/16;max-height:78vh;margin-left:auto;width:100%;max-width:440px;border:1px solid var(--rule)}
+  .vsl video{width:100%;height:100%;object-fit:cover}
+  .vsl .bar{position:absolute;left:0;right:0;padding:14px 16px;font:600 13px/1.3 var(--text);text-align:center;background:linear-gradient(rgba(0,0,0,.75),transparent)}
+  .vsl .bar.top{top:0}
+  .vsl .bar.bot{bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.8));padding-bottom:18px}
+  .vsl .bar.bot b{color:var(--purple-hi)}
+  .vsl button.snd{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);color:#fff;font-size:18px;cursor:pointer}
+  .vsl .tag{position:absolute;left:12px;top:56px;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;color:var(--fg2)}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.vsl{margin:0 auto;max-height:none;max-width:380px}}
+
+  /* stat strip */
+  .strip{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+  .strip div.s{padding:26px 0;border-right:1px solid var(--rule);padding-left:24px}
+  .strip div.s:first-child{padding-left:0}.strip div.s:last-child{border-right:0}
+  .strip b{display:block;font:400 clamp(40px,4.4vw,64px)/1 var(--display)}
+  .strip span{color:var(--fg2);font-size:14px}
+  @media(max-width:760px){.strip .wrap{grid-template-columns:1fr 1fr}.strip div.s{padding-left:0!important;border-right:0;border-bottom:1px solid var(--rule)}.strip div.s:nth-child(odd){padding-right:16px}}
+
+  section{padding:clamp(72px,9vw,128px) 0 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:32px;flex-wrap:wrap}
+  h2{font:400 clamp(44px,5.6vw,88px)/.95 var(--display);text-transform:uppercase}
+  .sec-head p{color:var(--fg2);max-width:28em}
+
+  /* filter tabs (Editions-style) */
+  .tabs{position:sticky;top:64px;z-index:40;background:rgba(0,0,0,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:12px 0;margin-bottom:24px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:none;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--rule);background:transparent;color:var(--fg2);font:500 14px/1 var(--text);cursor:pointer}
+  .tabs button sup{font:500 11px var(--mono);margin-left:6px;color:var(--fg3)}
+  .tabs button[aria-pressed=true]{background:#fff;color:#000;border-color:#fff}
+  .tabs button[aria-pressed=true] sup{color:#666}
+
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .card{grid-column:span 4;background:var(--card);border:1px solid var(--rule);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+  .card:hover{border-color:rgba(255,255,255,.32)}
+  .card.wide{grid-column:span 8}
+  .card .m{position:relative;aspect-ratio:4/5;background:var(--card2);overflow:hidden}
+  .card.wide .m{aspect-ratio:16/10}
+  .card .m video,.card .m img{width:100%;height:100%;object-fit:cover}
+  .card .b{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .card .k{display:flex;gap:8px;align-items:center}
+  .chip{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-radius:6px;background:rgba(255,255,255,.08);color:var(--fg2)}
+  .chip.paid{background:rgba(109,79,232,.22);color:#C9BCFF}
+  .chip.org{background:rgba(232,255,89,.14);color:var(--glow)}
+  .chip.auto{background:rgba(89,200,255,.14);color:#9FDFFF}
+  .card h3{font:600 clamp(20px,1.8vw,26px)/1.15 var(--text);letter-spacing:-.01em}
+  .card .out{color:var(--fg)}
+  .card .inc{color:var(--fg3);font-size:14px;margin-top:auto;padding-top:10px;border-top:1px solid var(--rule)}
+  .card[hidden]{display:none}
+  @media(max-width:1000px){.card,.card.wide{grid-column:span 6}}
+  @media(max-width:640px){.card,.card.wide{grid-column:span 12}.card .m,.card.wide .m{aspect-ratio:4/3}}
+
+  /* 21-tile bank visual */
+  .bank{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:22px;align-content:center;background:radial-gradient(circle at 30% 20%,#1c1a2e,#0b0b0d 70%)}
+  .bank i{aspect-ratio:9/16;border-radius:5px;background:linear-gradient(160deg,#2a2a33,#17171c);border:1px solid rgba(255,255,255,.08);opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+  .bank.on i{opacity:1;transform:none}
+  .bank i.hot{background:linear-gradient(160deg,var(--purple),#3a2a8c)}
+  .bank .ct{position:absolute;right:20px;bottom:16px;font:400 54px/1 var(--display);text-shadow:0 0 24px rgba(0,0,0,.8)}
+  .cuts{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px;background:radial-gradient(circle at 70% 30%,#13222b,#0b0b0d 70%)}
+  .cuts .src{width:30%;aspect-ratio:9/16;border-radius:10px;background:linear-gradient(160deg,#3a3a46,#1b1b22);border:1px solid rgba(255,255,255,.14);display:flex;align-items:end;padding:8px;font:500 10px var(--mono);color:var(--fg2)}
+  .cuts .arr{color:var(--fg3);font-size:22px}
+  .cuts .outs{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:34%}
+  .cuts .outs i{aspect-ratio:9/16;border-radius:6px;background:linear-gradient(160deg,#1d5f7a,#123544);border:1px solid rgba(255,255,255,.1)}
+
+  /* compliance band */
+  .band{margin-top:16px;border-radius:20px;border:1px solid var(--rule);padding:28px;display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;background:linear-gradient(90deg,rgba(109,79,232,.16),transparent 60%)}
+  .band b{font:400 34px/1 var(--display);text-transform:uppercase}
+  .band ul{list-style:none;display:flex;gap:10px 22px;flex-wrap:wrap;color:var(--fg2);font-size:15px}
+  .band li::before{content:"✕ ";color:var(--purple-hi)}
+  .band li.ok::before{content:"✓ "}
+  @media(max-width:860px){.band{grid-template-columns:1fr}}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+  .step{border-top:2px solid #fff;padding-top:20px}
+  .step .n{font:400 72px/1 var(--display);color:var(--fg3)}
+  .step h3{font:600 22px/1.2 var(--text);margin:10px 0 8px}
+  .step p{color:var(--fg2)}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+
+  /* proof */
+  .proof{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .pf{background:var(--card);border:1px solid var(--rule);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:6px;min-height:200px}
+  .pf b{font:400 clamp(48px,5vw,72px)/1 var(--display);margin-top:auto}
+  .pf span{color:var(--fg2);font-size:14px}
+  @media(max-width:900px){.proof{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.pf{padding:18px;min-height:170px}.pf b{font-size:42px}}
+  .pf{min-width:0}
+
+  /* work rail */
+  .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,1fr);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin}
+  .wk{scroll-snap-align:start;border-radius:18px;overflow:hidden;border:1px solid var(--rule);background:var(--card);display:flex;flex-direction:column}
+  .wk .m{aspect-ratio:4/5;overflow:hidden;background:var(--card2)}
+  .wk .m img,.wk .m video{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .wk:hover .m img,.wk:hover .m video{transform:scale(1.04)}
+  .wk .b{padding:16px 18px 18px}
+  .wk h3{font:600 18px/1.2 var(--text)}
+  .wk p{color:var(--fg2);font-size:14px;margin-top:4px}
+  .also{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;align-items:center}
+  .also .mono{margin-right:6px}
+
+  /* apply */
+  .apply{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,5vw,80px);padding-bottom:40px}
+  .apply .side p{color:var(--fg2);margin-top:16px;max-width:26em}
+  .apply .side .who{margin-top:24px;padding:18px;border:1px solid var(--rule);border-radius:16px;font-size:15px;color:var(--fg2)}
+  .apply .side .who b{color:#fff}
+  form{background:var(--card);border:1px solid var(--rule);border-radius:22px;padding:clamp(20px,3vw,32px)}
+  fieldset{border:0;margin-bottom:22px}
+  legend{font:600 16px/1.3 var(--text);margin-bottom:10px}
+  legend small{font:500 11px var(--mono);color:var(--fg3);margin-right:8px;letter-spacing:.06em}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opts label{position:relative}
+  .opts input{position:absolute;opacity:0;pointer-events:none}
+  .opts span{display:inline-block;padding:10px 14px;border-radius:999px;border:1px solid var(--rule);font-size:14px;color:var(--fg2);cursor:pointer;transition:all .15s}
+  .opts input:checked+span{background:#fff;color:#000;border-color:#fff}
+  .opts input:focus-visible+span{outline:2px solid var(--purple-hi);outline-offset:2px}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+  .fields input{height:48px;border-radius:12px;border:1px solid var(--rule);background:#000;color:#fff;padding:0 14px;font:400 15px var(--text)}
+  .fields input:focus{outline:none;border-color:var(--purple-hi)}
+  .fields .full{grid-column:1/-1}
+  @media(max-width:860px){.apply{grid-template-columns:1fr}.fields{grid-template-columns:1fr}}
+  .err{color:#ff8a8a;font-size:14px;margin-top:10px;min-height:1.2em}
+  .done{text-align:left}
+  .done h3{font:400 44px/1 var(--display);text-transform:uppercase;margin-bottom:12px}
+  .done p{color:var(--fg2);margin-bottom:18px}
+  .fine{font-size:13px;color:var(--fg3);margin-top:14px}
+
+  footer{border-top:1px solid var(--rule);margin-top:clamp(72px,9vw,120px);padding:32px 0 48px}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--fg2);font-size:14px}
+  footer nav{display:flex;gap:20px;flex-wrap:wrap}
+  footer a:hover{color:#fff}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.bank i{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="mark" href="./" aria-label="Akshen, home">AKSHEN<span class="star">***</span></a>
+    <nav aria-label="Sections">
+      <a href="#system">The system</a>
+      <a href="#how">How it works</a>
+      <a href="#proof">Proof</a>
+      <a href="#work">Work</a>
+    </nav>
+    <a class="pill pill-w" href="#apply">Book a call</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow mono"><i></i>The Clinic System · Winter ’26 Edition</div>
+        <h1>New patients in.<br><em>Past patients back.</em></h1>
+        <p class="lede">Content and ads for med spas, built from your services and written to your regulator’s rules. One system, three engines, no shoot days.</p>
+        <div class="ctas">
+          <a class="pill pill-p" href="#apply">Book a 20-minute call</a>
+          <a class="pill pill-o" href="#system">See what’s inside ↓</a>
+        </div>
+      </div>
+      <div class="vsl" id="vsl">
+        <video id="vslVideo" muted loop playsinline preload="metadata"></video>
+        <div class="bar top">POV: one clinic, three engines, zero shoot days</div>
+        <span class="tag" id="vslTag" hidden>Preview · full breakdown coming</span>
+        <button class="snd" id="vslSound" aria-label="Turn sound on">🔇</button>
+        <div class="bar bot"><a href="#apply">Book a <b>call</b> ↓</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="strip">
+    <div class="wrap">
+      <div class="s"><b>3</b><span>engines: paid, organic, automated</span></div>
+      <div class="s"><b>21</b><span>original videos in every content bank</span></div>
+      <div class="s"><b>14</b><span>days to your first batch</span></div>
+      <div class="s"><b>0</b><span>shoot days required</span></div>
+    </div>
+  </div>
+
+  <!-- THE SYSTEM (Editions-style filterable grid) -->
+  <section id="system">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>What’s inside</h2>
+        <p>Each engine does one job. Together they fill your calendar from both ends: strangers who’ve never heard of you, and patients who already trust you.</p>
+      </div>
+
+      <div class="tabs" role="toolbar" aria-label="Filter by engine">
+        <button aria-pressed="true" data-f="all">All<sup>6</sup></button>
+        <button aria-pressed="false" data-f="paid">Paid · front door<sup>2</sup></button>
+        <button aria-pressed="false" data-f="org">Organic · side door<sup>2</sup></button>
+        <button aria-pressed="false" data-f="auto">Automated · engine room<sup>2</sup></button>
+      </div>
+
+      <div class="grid" id="cards">
+        <article class="card wide reveal" data-e="paid">
+          <div class="m"><video data-src="../media/elitemd-3.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="b">
+            <div class="k"><span class="chip paid">Paid</span><span class="mono">01</span></div>
+            <h3>Package ads that explain themselves</h3>
+            <p class="out">New consultations from people in your area who’ve never heard of you.</p>
+            <p class="inc">Your services bundled into packages people search for (skin, under-eye, men’s health, seasonal), each with its own short VSL-style ad.</p>
+          </div>
+        </article>
+        <article class="card reveal" data-e="paid">
+          <div class="m"><img src="../media/img-1019.jpg" alt="EliteMD services banner in the clinic" loading="lazy"></div>
+          <div class="b">
+            <div class="k"><span class="chip paid">Paid</span><span class="mono">02</span></div>
+            <h3>Meta lead campaigns</h3>
+            <p class="out">Leads arrive with a clear offer, like a free consultation, not a vague “learn more.”</p>
+            <p class="inc">Campaigns built and run in Meta Ads Manager, one ad set per package.</p>
+          </div>
+        </article>
+
+        <article class="card reveal" data-e="org">
+          <div class="m"><video data-src="../media/titus-5.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="b">
+            <div class="k"><span class="chip org">Organic</span><span class="mono">03</span></div>
+            <h3>Event nights, filmed and recapped</h3>
+            <p class="out">Past patients see the night they missed, and RSVP for the next one.</p>
+            <p class="inc">Event planning help, on-site video and photo, recap reels released as collab posts.</p>
+          </div>
+        </article>
+        <article class="card wide reveal" data-e="org">
+          <div class="m"><video data-src="../media/elitemd-2.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="b">
+            <div class="k"><span class="chip org">Organic</span><span class="mono">04</span></div>
+            <h3>Event-only offers that bring people back</h3>
+            <p class="out">Patients who went quiet after one treatment get a reason to book again.</p>
+            <p class="inc">Bottom-of-funnel posts and stories that point back to the event and its offer, timed after each recap.</p>
+          </div>
+        </article>
+
+        <article class="card wide reveal" data-e="auto">
+          <div class="m"><div class="bank" id="bank" aria-hidden="true"><span class="ct" id="bankCt">0</span></div></div>
+          <div class="b">
+            <div class="k"><span class="chip auto">Automated</span><span class="mono">05</span></div>
+            <h3>A bank of 21 minute-long videos</h3>
+            <p class="out">A feed that never goes quiet, without anyone at the clinic picking up a camera.</p>
+            <p class="inc">21 original educational videos built from your services: what a treatment does, who it’s for, what to expect.</p>
+          </div>
+        </article>
+        <article class="card reveal" data-e="auto">
+          <div class="m"><div class="cuts" aria-hidden="true"><div class="src">1 min</div><span class="arr">→</span><div class="outs"><i></i><i></i><i></i><i></i></div></div></div>
+          <div class="b">
+            <div class="k"><span class="chip auto">Automated</span><span class="mono">06</span></div>
+            <h3>Trial reels and variations</h3>
+            <p class="out">Daily posts from one bank, and data on which hooks actually work.</p>
+            <p class="inc">Every long video cut into shorter trial reels, with hook and caption variations to test.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="band reveal">
+        <b>Compliant by default</b>
+        <ul>
+          <li>No testimonials</li><li>No superlatives</li><li>No product brand names</li><li class="ok">Only claims you can verify</li>
+        </ul>
+        <a class="mono" href="https://www.cpso.on.ca/Physicians/Policies-Guidance/Policies/Advertising" target="_blank" rel="noopener">CPSO policy ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2>How it works</h2><p>Start with one package, not your whole menu.</p></div>
+      <div class="steps">
+        <div class="step reveal"><div class="n">01</div><h3>20-minute call</h3><p>Answer five one-tap questions below. If it’s a fit, we talk through your services, your numbers and your next event.</p></div>
+        <div class="step reveal"><div class="n">02</div><h3>Package map + brand kit</h3><p>I turn your service menu into packages, set up your brand kit, and pick the first package to run.</p></div>
+        <div class="step reveal"><div class="n">03</div><h3>First batch in 14 days</h3><p>Ads, posts and your first videos from the bank, ready to run. Then a fresh batch every two weeks.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section id="proof">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2>Proof</h2><p>Clinic marketing since 2023, plus short-form that travels.</p></div>
+      <div class="proof">
+        <div class="pf reveal"><span class="mono">Client work</span><span>EliteMD Aesthetics, a med spa and family practice. Content, paid social and print.</span><b>2023→</b></div>
+        <div class="pf reveal"><span class="mono">Single reel</span><span>Las Vegas travel reel on Instagram, camcorder style.</span><b>1.4M</b></div>
+        <div class="pf reveal"><span class="mono">TikTok</span><span>Views through deliberate trends and hooks.</span><b>2.3M</b></div>
+        <div class="pf reveal"><span class="mono">Event recaps</span><span>Toronto Fashion Week, across 14 collab videos.</span><b>30K+</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2>Work</h2><p>The full case studies live on the main site.</p></div>
+      <div class="rail">
+        <a class="wk" href="../#/elitemd"><div class="m"><video data-src="../media/elitemd-1.mp4" muted loop playsinline preload="none"></video></div><div class="b"><h3>EliteMD</h3><p>Client work · med spa marketing</p></div></a>
+        <a class="wk" href="../#/spur"><div class="m"><img src="../media/spur-poster.jpg" alt="" loading="lazy"></div><div class="b"><h3>SPUR Fashion Show</h3><p>Head of visual production · sold out, $70K raised</p></div></a>
+        <a class="wk" href="../#/social"><div class="m"><img src="../media/las-vegas-poster.jpg" alt="" loading="lazy"></div><div class="b"><h3>Social media recap</h3><p>1.4M-view reel · fashion week recaps</p></div></a>
+        <a class="wk" href="../#/reverie"><div class="m"><img src="../media/reverie-poster.jpg" alt="" loading="lazy"></div><div class="b"><h3>Reverie</h3><p>Editor and producer · 2nd place, RGB Trophy</p></div></a>
+      </div>
+      <div class="also">
+        <span class="mono">Not a clinic?</span>
+        <a class="pill pill-o" href="../#/services/editing">Video editing</a>
+        <a class="pill pill-o" href="../#/services/events">Event coverage</a>
+        <a class="pill pill-o" href="../#/apply">Shoot days</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section id="apply">
+    <div class="wrap apply">
+      <div class="side reveal">
+        <h2>Book a call</h2>
+        <p>Five one-tap questions. If it looks like a fit, you’ll get a link to book 20 minutes. Bring your service menu; I’ll bring a first package map.</p>
+        <div class="who"><b>For you if</b> you run a med spa or aesthetics clinic, can host an event, and someone answers new leads within a day.</div>
+      </div>
+      <form id="form" class="reveal" novalidate>
+        <div id="qs"></div>
+        <div class="fields">
+          <input name="name" placeholder="Your name" autocomplete="name" required>
+          <input name="clinic" placeholder="Clinic name" autocomplete="organization">
+          <input class="full" name="email" type="email" placeholder="Email" autocomplete="email" required>
+        </div>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <button class="pill pill-p" type="submit" id="send">Send my answers</button>
+        <p class="err" id="err" role="alert"></p>
+        <p class="fine">Your details are only used to reply to you.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Akshen Sivakumar · Toronto</span>
+    <nav>
+      <a href="mailto:akshens@gmail.com">akshens@gmail.com</a>
+      <a href="tel:+16479722872">(647) 972-2872</a>
+      <a href="https://www.instagram.com/most.wanted.film/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@most.wanted.film" target="_blank" rel="noopener">TikTok</a>
+      <a href="../">Full site</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* ============ CONFIG: edit these ============ */
+const CONFIG = {
+  vsl: "",                                  // your finished VSL, e.g. "../media/vsl.mp4". Empty = plays the preview below with a "coming" tag.
+  vslPreview: "../media/elitemd-3.mp4",
+  endpoint: "",                             // same Google Apps Script /exec URL as v2 (apps-script/leads.gs). Empty = opens the visitor's email app.
+  booking: "",                              // Cal.com / Calendly link, shown only to qualified leads
+  email: "akshens@gmail.com",
+  questions: [
+    { name: "business",   q: "What do you run?",                options: ["Med spa or aesthetics clinic", "Dental, vet, pharmacy, or other clinic", "Something else"] },
+    { name: "bottleneck", q: "What’s holding growth back most?", options: ["Not enough new patients", "Leads don’t book or show up", "Past patients don’t come back", "Posting is inconsistent"] },
+    { name: "events",     q: "Do you run patient events?",        options: ["Yes, regularly", "Once or twice a year", "Not yet, but open to it", "No"] },
+    { name: "role",       q: "What’s your role?",                 options: ["Owner", "Manager or marketing lead", "Staff"] },
+    { name: "timing",     q: "When do you want to start?",        options: ["Right away", "In the next month", "Just exploring"] },
+  ],
+  qualify: { role: ["Owner", "Manager or marketing lead"], timing: ["Right away", "In the next month"], events: ["Yes, regularly", "Once or twice a year", "Not yet, but open to it"] },
+};
+/* ============================================ */
+
+(function () {
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // VSL
+  const v = $("#vslVideo"), snd = $("#vslSound");
+  v.src = CONFIG.vsl || CONFIG.vslPreview;
+  if (!CONFIG.vsl) $("#vslTag").hidden = false;
+  v.play().catch(() => {});
+  snd.onclick = () => { v.muted = !v.muted; if (!v.muted) { v.currentTime = 0; v.play(); } snd.textContent = v.muted ? "🔇" : "🔊"; snd.setAttribute("aria-label", v.muted ? "Turn sound on" : "Turn sound off"); };
+
+  // lazy videos: load + play only while on screen
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const el = e.target;
+    if (e.isIntersecting) { if (!el.src) el.src = el.dataset.src; el.play().catch(() => {}); } else el.pause();
+  }), { threshold: .35 });
+  $$("video[data-src]").forEach(el => io.observe(el));
+
+  // reveal on scroll
+  const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); ro.unobserve(e.target); } }), { threshold: .12 });
+  $$(".reveal").forEach(el => ro.observe(el));
+
+  // 21-tile bank + counter
+  const bank = $("#bank"), ct = $("#bankCt");
+  for (let i = 0; i < 21; i++) { const t = document.createElement("i"); if ([3, 9, 17].includes(i)) t.className = "hot"; t.style.transitionDelay = (i * 45) + "ms"; bank.insertBefore(t, ct); }
+  new IntersectionObserver((es, o) => es.forEach(e => {
+    if (!e.isIntersecting) return; o.disconnect(); bank.classList.add("on");
+    if (reduce) { ct.textContent = "21"; return; }
+    let n = 0; const tick = setInterval(() => { ct.textContent = ++n; if (n >= 21) clearInterval(tick); }, 45);
+  }), { threshold: .4 }).observe(bank);
+
+  // filter tabs
+  $$(".tabs button").forEach(b => b.onclick = () => {
+    $$(".tabs button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    const f = b.dataset.f;
+    $$("#cards .card").forEach(c => { c.hidden = !(f === "all" || c.dataset.e === f); if (!c.hidden) c.classList.add("in"); });
+  });
+
+  // form
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  $("#qs").innerHTML = CONFIG.questions.map((q, i) =>
+    `<fieldset><legend><small>0${i + 1}</small>${esc(q.q)}</legend><div class="opts">` +
+    q.options.map(o => `<label><input type="radio" name="${q.name}" value="${esc(o)}" required><span>${esc(o)}</span></label>`).join("") +
+    `</div></fieldset>`).join("");
+
+  const form = $("#form"), err = $("#err"), send = $("#send");
+  const track = Object.fromEntries([...new URLSearchParams(location.search)].filter(([k]) => k.startsWith("utm_")));
+  form.addEventListener("submit", async e => {
+    e.preventDefault(); err.textContent = "";
+    const fd = new FormData(form); if (fd.get("_gotcha")) return;
+    const a = Object.fromEntries(fd.entries()); delete a._gotcha;
+    const missing = CONFIG.questions.find(q => !a[q.name]);
+    if (missing) { err.textContent = "Pick an answer for: " + missing.q; return; }
+    if (!a.name || !/^\S+@\S+\.\S+$/.test(a.email || "")) { err.textContent = "Add your name and a valid email."; return; }
+    const fit = Object.entries(CONFIG.qualify).every(([k, ok]) => ok.includes(a[k]));
+    const subject = `Clinic System enquiry: ${a.clinic || a.name}`;
+    const body = `Hi Akshen,\n\nI'm ${a.name}${a.clinic ? " from " + a.clinic : ""}.\n\n` +
+      CONFIG.questions.map(q => `${q.q} ${a[q.name]}`).join("\n") + `\n\nReach me at ${a.email}.`;
+    const data = Object.assign({ _subject: (fit ? "⭐ " : "") + subject, qualified: fit ? "yes" : "no", _inquiry: body, service: "clinic", source: "v3" }, a, track, { page: location.href, submitted: new Date().toISOString() });
+    send.disabled = true; send.textContent = "Sending…";
+    let sent = false;
+    if (CONFIG.endpoint) {
+      try {
+        const gas = /script\.google(usercontent)?\.com/.test(CONFIG.endpoint);
+        const r = await fetch(CONFIG.endpoint, gas ? { method: "POST", body: JSON.stringify(data), redirect: "follow" }
+          : { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+        sent = r.ok; if (sent && gas) { try { sent = (await r.json()).ok !== false; } catch (_) {} }
+      } catch (_) { sent = false; }
+    }
+    const mail = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const sendBtn = sent ? "" : `<p><strong>One more tap:</strong> your answers haven’t been sent yet. This opens your email with everything filled in.</p><a class="pill pill-p" href="${esc(mail)}">Send my answers</a>`;
+    const next = fit
+      ? (CONFIG.booking ? `<a class="pill pill-w" href="${esc(CONFIG.booking)}" target="_blank" rel="noopener">Book your 20-minute call</a>` : `<p>I’ll reply within a day to set up a 20-minute call.</p>`)
+      : `<p>Based on your answers, a full system may not fit just yet. I’ll keep your details and reach out when a smaller package suits where you are.</p>`;
+    form.innerHTML = `<div class="done"><h3>${fit ? "Looks like a fit." : "Thanks, " + esc(a.name.split(" ")[0]) + "."}</h3>${sendBtn}${sent || !fit ? next : (CONFIG.booking ? next : "")}</div>`;
+  });
+})();
+</script>
+</body>
+</html>
